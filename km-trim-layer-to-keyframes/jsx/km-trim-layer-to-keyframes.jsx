@@ -23,9 +23,8 @@
         var proj = getProj();
         var comp = getComp(proj);
         var selLayers = getSelLayers(comp);
-        
 
-        trimLayersToKeyframes(selLayers, comp)
+        trimLayersToKeyframes(selLayers, comp);
       } catch(error) {
         alert("An error occured on line: " + error.line + "\nError message: " + error.message);
 
@@ -71,27 +70,44 @@
 
 
       function traverseProperties(propGroup, keys, start, end){
-        
+
         for(var i = 1; i<=propGroup.numProperties; i++){
           var prop = propGroup.property(i);
           if(prop instanceof PropertyGroup || prop instanceof MaskPropertyGroup){
             traverseProperties(prop,keys, start, end)
           } else if(prop instanceof Property) {
-            if(isAnimated(prop) && prop.numKeys > 0){
+            if(isAnimated(prop)){
                 for(var b = 1; b<=prop.numKeys; b++){
-                  var keyTime = prop.keyTime(b);
-                  if(keyTime >= start && keyTime <= end){
-                    keys.push(keyTime);
-                  }
+                    var keyTime = prop.keyTime(b);
+                    if(keyTime >= start && keyTime <= end){
+                      keys.push(keyTime);
+                    }
+                  } 
                 }
+              }
+            }
+          }
+        
+      function isAnimated(prop){
+        var animatedProp = prop.isTimeVarying;
+        return animatedProp
+      }
+
+
+      function getSelectedKeyTimes(layer, keys, props, start, end){
+        for(var i = 0;i<props.length; i++){
+          var prop = props[i];
+          if(prop.selectedKeys.length > 0 && prop.isTimeVarying){
+            for(var p = 0; p<prop.selectedKeys.length;p++){
+              var keyIndex = prop.selectedKeys[p];
+              keyTime = prop.keyTime(keyIndex);
+              if(keyTime >= start && keyTime <= end){
+                keys.push(keyTime);
+              }
             }
           }
         }
-      }
-
-      function isAnimated(prop){
-        var animatedProp = prop.isTimeVarying && !prop.expressionEnabled;
-        return animatedProp
+        return keys
       }
 
       function trimLayersToKeyframes(layers,comp){
@@ -100,10 +116,16 @@
         var found = false;
         var compStart = comp.displayStartTime;
         var compEnd = compStart + comp.duration;
+   
         for(var i = 0; i<layers.length; i++){
           var layer = layers[i];
           var keyTimes = [];
-          traverseProperties(layer, keyTimes,compStart, compEnd);
+          var selProps = layer.selectedProperties;
+          if(selProps.length < 1){
+            traverseProperties(layer, keyTimes,compStart, compEnd);
+          } else {
+            getSelectedKeyTimes(layer, keyTimes, selProps, compStart, compEnd)
+          }
           if(keyTimes.length > 1){
             found = true;
             var minTime = Math.min.apply(null,keyTimes);
