@@ -77,7 +77,7 @@
           if(prop instanceof PropertyGroup || prop instanceof MaskPropertyGroup){
             traverseProperties(prop,keys, start, end)
           } else if(prop instanceof Property) {
-            if(isAnimated(prop) && prop.numKeys > 1){
+            if(isAnimated(prop) && prop.numKeys > 0){
                 for(var b = 1; b<=prop.numKeys; b++){
                   var keyTime = prop.keyTime(b);
                   if(keyTime >= start && keyTime <= end){
