@@ -1,9 +1,9 @@
 # Trim Layers To Keys
 
-This headless After Effects script trims your layer in and out points based on the first and last keyframes on your layer. Simply select the layers you want to trim and run the script.
+This headless After Effects script trims your layer in and out points based on the first and last keyframes on your layer. Simply select the layers you want to trim and run the script.  
 
 ## Installation
-
+Download the .jsxbin file from the repo above to use in your version of After Effects.
 The script must be placed in the Scripts directory in the
 After Effects application folder. That folder will be named “Adobe After Effects [version]”
 which has been replaced with “AE” below.
