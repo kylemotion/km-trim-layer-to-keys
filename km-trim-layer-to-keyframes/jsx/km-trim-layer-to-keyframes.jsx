@@ -97,16 +97,18 @@
       function getSelectedKeyTimes(layer, keys, props, start, end){
         for(var i = 0;i<props.length; i++){
           var prop = props[i];
-          if(prop.selectedKeys.length > 0 && prop.isTimeVarying){
-            for(var p = 0; p<prop.selectedKeys.length;p++){
-              var keyIndex = prop.selectedKeys[p];
-              keyTime = prop.keyTime(keyIndex);
-              if(keyTime >= start && keyTime <= end){
-                keys.push(keyTime);
+          if(prop.isTimeVarying){
+            if(prop.selectedKeys.length > 0){
+              for(var p = 0; p<prop.selectedKeys.length;p++){
+                var keyIndex = prop.selectedKeys[p];
+                keyTime = prop.keyTime(keyIndex);
+                if(keyTime >= start && keyTime <= end){
+                  keys.push(keyTime);
+                }
               }
             }
-          }
         }
+      }
         return keys
       }
 
