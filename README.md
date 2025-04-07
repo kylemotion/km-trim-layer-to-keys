@@ -10,7 +10,7 @@ which has been replaced with “AE” below.
 
 Mac OS X
 ```
-/Applications/AE/Scripts
+/Applications/AE/Scripts/
 ```
 
 Windows
