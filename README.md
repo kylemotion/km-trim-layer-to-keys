@@ -25,7 +25,6 @@ To do that follow this path:
 ```
 Preferences > General > Check-off “Allow Scripts to Write Files and Access Network” > Close
 Preferences
-
 ```
 
 ## Steps
