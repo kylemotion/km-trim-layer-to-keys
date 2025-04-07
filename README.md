@@ -11,3 +11,5 @@ This After Effects script trims your layer in and out points based on the first 
 ## Script UI
 
 This is a headless script (no panel).
+
+![til](./reference/Trim_Layers_To_Keys_Demo.gif)
